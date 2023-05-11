@@ -1,10 +1,9 @@
-import Tour from '@/components/Tour';
+import Filter from '@/components/Filter'
+import Tour from '@/components/Tour'
 import Head from 'next/head'
-import clientPromise from '../../lib/mongodb';
-import Navbar from './../components/Navbar'
+import clientPromise from '../../lib/mongodb'
 
-export default function Home({ tours }) {
-  console.log(tours)
+export default function Explore({ tours }) {
   return (
     <>
       <Head>
@@ -13,9 +12,11 @@ export default function Home({ tours }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <Navbar />
-        <div className="grid grid-cols-4 gap-4 mx-20 mt-10">
+      <main className='flex'>
+        <div className='w-[250vw]'>
+          <Filter />
+        </div>
+        <div className="grid grid-cols-4 gap-4 mx-6 mt-10">
           {tours?.map(tour => {
             return <Tour
               key={tour.title}
@@ -26,6 +27,7 @@ export default function Home({ tours }) {
               price={tour.price}
             />
           })}
+          {tours?.length === 0 && <h1>No Data Found :( </h1>}
         </div>
       </main>
     </>
@@ -47,5 +49,6 @@ export async function getServerSideProps() {
     };
   } catch (e) {
     console.error(e);
+    return { props: { tours: [] } }
   }
 }

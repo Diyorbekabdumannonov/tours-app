@@ -3,8 +3,7 @@ import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import 'swiper/css'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { MdMyLocation } from 'react-icons/md'
-import { BsFillCalendarDayFill } from 'react-icons/bs'
+import SearchBar from './SearchBar';
 
 const navigation = [
   { name: 'Product', href: '/' },
@@ -17,22 +16,21 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="bg-white">
-      <header className='relative z-50 text-white'>
+    <>
+      <nav className='relative z-50 text-white'>
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
+              {/* <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt=""
-              />
+                src={logo}
+                alt="logo"
+              /> */}
             </a>
           </div>
           <div className="flex lg:hidden">
             <button
-              type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5"
               onClick={() => setMobileMenuOpen(true)}
             >
@@ -99,7 +97,7 @@ export default function Navbar() {
             </div>
           </Dialog.Panel>
         </Dialog>
-      </header>
+      </nav>
       <div className="relative -mt-20">
         <Swiper
           direction='horizontal'
@@ -108,7 +106,7 @@ export default function Navbar() {
             delay: 1000,
           }}
           slidesPerView={1}
-          className="w-full h-full relative"
+          className="w-full h-[600px] relative"
         >
           {[1, 2, 3, 4].map(e => {
             return <SwiperSlide key={e}
@@ -124,59 +122,8 @@ export default function Navbar() {
             </SwiperSlide>
           })}
         </Swiper>
-        <div className="px-6 lg:px-8 py-20 z-10 absolute h-auto w-full top-1/2">
-          <div className='bg-white rounded-xl p-10 max-w-6xl mx-auto'>
-            <h1 className='text-3xl font-semibold'>Latest reviews. Lowest prices.</h1>
-            <p className='mt-4 text-[#2C2C2C]'>compares prices from 200+ booking sites to help you find the lowest price on the right hotel for you.</p>
-            <div className='flex items-center'>
-              <div className="relative mt-2 shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <MdMyLocation className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                </div>
-                <input
-                  className="block w-full rounded-l-md py-1.5 pl-10 text-gray-800  placeholder:text-gray-800 font-semibold sm:text-sm sm:leading-6 outline-none bg-orange-100"
-                  placeholder="Search “Thailand, Asia”"
-                />
-              </div>
-              <div className="relative mt-2 rounded-md shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <BsFillCalendarDayFill className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                </div>
-                <div className="flex items-center justify-between bg-orange-100">
-                  <input
-                    className="block py-1.5 pl-10 text-gray-800 !w-32 placeholder:text-gray-800 font-semibold sm:text-sm sm:leading-6 outline-none border-l border-l-black bg-orange-100"
-                    placeholder="8 Days"
-                  />
-                  <span>-</span>
-                  <input
-                    className="block py-1.5 pl-10 text-gray-800 placeholder:text-gray-800 font-semibold sm:text-sm sm:leading-6 outline-none bg-orange-100"
-                    placeholder="Spring, summer, autumn"
-                  />
-                </div>
-              </div>
-              <div className="relative mt-2 rounded-md shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span className="text-gray-500 sm:text-sm">💲 </span>
-                </div>
-                <input
-                  type="text"
-                  name="price"
-                  id="price"
-                  className="block w-full border-l border-l-black bg-orange-100 outline-none py-1.5 pl-7 pr-12 text-gray-800 font-semibold placeholder:text-gray-800 sm:text-sm sm:leading-6"
-                  placeholder="0.00"
-                  aria-describedby="price-currency"
-                />
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                  <span className="text-gray-500 sm:text-sm" id="price-currency">
-                    USD
-                  </span>
-                </div>
-              </div>
-              <button className='w-64 py-1 mt-2 bg-green-600 text-white font-bold text-xl'>Find Tours</button>
-            </div>
-          </div>
-        </div>
+        <SearchBar />
       </div>
-    </div>
+    </>
   )
 }
