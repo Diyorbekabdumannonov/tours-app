@@ -1,10 +1,14 @@
 import Tour from '@/components/Tour';
 import Head from 'next/head'
+import { useContext } from 'react';
 import clientPromise from '../../lib/mongodb';
 import Navbar from './../components/Navbar'
+import { Context } from './_app';
 
 export default function Home({ tours }) {
-  console.log(tours)
+  const { SETTOURS, filteredTours } = useContext(Context)
+  console.log(filteredTours)
+  SETTOURS(tours)
   return (
     <>
       <Head>
@@ -15,17 +19,31 @@ export default function Home({ tours }) {
       </Head>
       <main>
         <Navbar />
-        <div className="grid grid-cols-4 gap-4 mx-20 mt-10">
-          {tours?.map(tour => {
-            return <Tour
-              key={tour.title}
-              title={tour.title}
-              imgSrc={tour.image}
-              href={tour.link}
-              desc={tour.desc}
-              price={tour.price}
-            />
-          })}
+        <div className="grid grid-cols-4 gap-4 px-10 mt-10 max-w-1440 mx-auto">
+          {filteredTours?.length ?
+            filteredTours.map(tour => {
+              return <Tour
+                key={tour.title}
+                title={tour.title}
+                imgSrc={tour.image}
+                href={tour.link}
+                desc={tour.desc}
+                price={tour.price}
+              />
+            })
+            : filteredTours?.length == 0
+              ?
+              <h1>No Data Found</h1>
+              : tours.map(tour => {
+                return <Tour
+                  key={tour.title}
+                  title={tour.title}
+                  imgSrc={tour.image}
+                  href={tour.link}
+                  desc={tour.desc}
+                  price={tour.price}
+                />
+              })}
         </div>
       </main>
     </>

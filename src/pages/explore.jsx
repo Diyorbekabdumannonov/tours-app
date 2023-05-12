@@ -12,7 +12,7 @@ export default function Explore({ tours }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className='flex'>
+      <main className='flex max-w-1440 mx-auto'>
         <div className='w-[250vw]'>
           <Filter />
         </div>
@@ -49,6 +49,5 @@ export async function getServerSideProps() {
     };
   } catch (e) {
     console.error(e);
-    return { props: { tours: [] } }
   }
 }

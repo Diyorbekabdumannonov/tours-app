@@ -11,16 +11,18 @@ export default function Tour({ imgSrc, href, title, desc, price }) {
         />
       </div>
       <div className="mt-4 flex justify-between">
-        <div>
-          <h3 className="text-sm text-gray-700">
-            <a href={'https://www.advantour.com' + href}>
-              <span aria-hidden="true" className="absolute inset-0" />
-              {title}
-            </a>
+        <div className='h-40 overflow-hidden'>
+          <h3 className="text-base font-bold text-gray-700">
+            {title}
           </h3>
-          <p className="mt-1 text-sm text-gray-500">{desc}</p>
+          <p className="mt-1 text-sm">{desc}</p>
         </div>
         <p className="text-sm font-medium text-gray-900 w-96">{price}</p>
+      </div>
+      <div className='mt-4 w-full px-6'>
+        <a href={'https://www.advantour.com' + href} className="bg-green-500 rounded-full text-white font-bold block w-full text-center py-1.5">
+         Read More
+        </a>
       </div>
     </div>
   )

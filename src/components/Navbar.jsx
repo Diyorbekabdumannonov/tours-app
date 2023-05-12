@@ -1,9 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import 'swiper/css'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SearchBar from './SearchBar';
+import a from './../assets/1.jpg'
+import b from './../assets/2.jpg'
+import c from './../assets/3.jpg'
+import d from './../assets/4.jpg'
+import Image from 'next/image';
 
 const navigation = [
   { name: 'Product', href: '/' },
@@ -13,20 +18,27 @@ const navigation = [
 ]
 
 export default function Navbar() {
+  const swiper = useRef()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  useEffect(() => {
+    setInterval(() => {
+      swiper?.current?.swiper?.slideNext()
+    }, 8000)
+  }, [])
 
   return (
     <>
       <nav className='relative z-50 text-white'>
-        <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <nav className="flex items-center justify-between p-6 lg:px-8 max-w-1440 mx-auto" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              {/* <img
-                className="h-8 w-auto"
-                src={logo}
+            <a href="/" className='flex items-center gap-4 mb-6 text-2xl font-bold'>
+              <img
+                className="h-12 w-auto"
+                src={'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/1024px-Tailwind_CSS_Logo.svg.png'}
                 alt="logo"
-              /> */}
+              />
+              <span>Logo</span>
             </a>
           </div>
           <div className="flex lg:hidden">
@@ -98,25 +110,23 @@ export default function Navbar() {
           </Dialog.Panel>
         </Dialog>
       </nav>
-      <div className="relative -mt-20">
+      <div className="relative -mt-32 overflow-hidden w-screen">
         <Swiper
           direction='horizontal'
-          loop={true}
-          autoplay={{
-            delay: 1000,
-          }}
+          loop
+          ref={swiper}
           slidesPerView={1}
-          className="w-full h-[600px] relative"
+          className="w-screen h-screen relative"
         >
-          {[1, 2, 3, 4].map(e => {
-            return <SwiperSlide key={e}
+          {[a, b, c, d].map((index, i) => {
+            return <SwiperSlide key={i}
               className="relative w-full h-full"
               data-swiper-autoplay="20"
             >
-              <img
-                src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
+              <Image
+                src={index}
                 alt=""
-                className="object-cover"
+                className="w-screen h-screen object-cover"
               />
 
             </SwiperSlide>
