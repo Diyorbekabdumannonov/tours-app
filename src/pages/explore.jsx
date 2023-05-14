@@ -1,4 +1,5 @@
 import Filter from '@/components/Filter'
+import Navbar from '@/components/Navbar'
 import Tour from '@/components/Tour'
 import Head from 'next/head'
 import clientPromise from '../../lib/mongodb'
@@ -12,22 +13,27 @@ export default function Explore({ tours }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className='flex max-w-1440 mx-auto'>
-        <div className='w-[250vw]'>
-          <Filter />
+      <main>
+        <div className='bg-sky-950'>
+          <Navbar />
         </div>
-        <div className="grid grid-cols-4 gap-4 mx-6 mt-10">
-          {tours?.map(tour => {
-            return <Tour
-              key={tour.title}
-              title={tour.title}
-              imgSrc={tour.image}
-              href={tour.link}
-              desc={tour.desc}
-              price={tour.price}
-            />
-          })}
-          {tours?.length === 0 && <h1>No Data Found :( </h1>}
+        <div className='flex max-w-1440 mx-auto mt-4'>
+          <div className='w-[250vw]'>
+            <Filter />
+          </div>
+          <div className="grid grid-cols-4 gap-4 mx-6 mt-10">
+            {tours?.map(tour => {
+              return <Tour
+                key={tour.title}
+                title={tour.title}
+                imgSrc={tour.image}
+                href={tour.link}
+                desc={tour.desc}
+                price={tour.price}
+              />
+            })}
+            {tours?.length === 0 && <h1 className='text-2xl font-semibold text-center w-72'>No Data Found :( </h1>}
+          </div>
         </div>
       </main>
     </>
@@ -49,5 +55,8 @@ export async function getServerSideProps() {
     };
   } catch (e) {
     console.error(e);
+    return {
+      props: { tours: [] },
+    };
   }
 }

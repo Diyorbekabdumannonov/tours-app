@@ -1,31 +1,25 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import 'swiper/css'
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SearchBar from './SearchBar';
-import a from './../assets/1.jpg'
-import b from './../assets/2.jpg'
-import c from './../assets/3.jpg'
-import d from './../assets/4.jpg'
-import Image from 'next/image';
-
-const navigation = [
-  { name: 'Product', href: '/' },
-  { name: 'Features', href: '/' },
-  { name: 'Marketplace', href: '/' },
-  { name: 'Company', href: '/' },
-]
+import { MdOutlineSearch } from 'react-icons/md';
+import { Context } from '@/pages/_app';
 
 export default function Navbar() {
-  const swiper = useRef()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { TOURS, setFilteredData } = useContext(Context)
 
-  useEffect(() => {
-    setInterval(() => {
-      swiper?.current?.swiper?.slideNext()
-    }, 8000)
-  }, [])
+  const navigation = [
+    { name: 'Explore', href: '/explore' },
+    { name: 'Product', href: '/' },
+    { name: 'Features', href: '/' },
+    { name: 'Marketplace', href: '/' },
+  ]
+
+  const handleChange = (e) => {
+    const filteredData = TOURS?.filter(el => el.title.toLowerCase().includes(e.target.value.toLowerCase()))
+    setFilteredData(filteredData)
+  }
 
   return (
     <>
@@ -58,9 +52,15 @@ export default function Navbar() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm font-semibold leading-6">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            <div className='bg-white text-sky-950 shadow-xl flex items-center py-2 px-4 rounded-full'>
+              <input
+                type="text"
+                placeholder='Quick Search'
+                className='bg-transparent text-sky-950 placeholder:text-sky-950 font-semibold outline-none'
+                onChange={e => handleChange(e)}
+              />
+              <MdOutlineSearch />
+            </div>
           </div>
         </nav>
         <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -97,43 +97,12 @@ export default function Navbar() {
                     </a>
                   ))}
                 </div>
-                <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    Log in
-                  </a>
-                </div>
+                <div></div>
               </div>
             </div>
           </Dialog.Panel>
         </Dialog>
       </nav>
-      <div className="relative -mt-32 overflow-hidden w-screen">
-        <Swiper
-          direction='horizontal'
-          loop
-          ref={swiper}
-          slidesPerView={1}
-          className="w-screen h-screen relative"
-        >
-          {[a, b, c, d].map((index, i) => {
-            return <SwiperSlide key={i}
-              className="relative w-full h-full"
-              data-swiper-autoplay="20"
-            >
-              <Image
-                src={index}
-                alt=""
-                className="w-screen h-screen object-cover"
-              />
-
-            </SwiperSlide>
-          })}
-        </Swiper>
-        <SearchBar />
-      </div>
     </>
   )
 }
