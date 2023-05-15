@@ -24,7 +24,7 @@ export default function Header() {
                 loop
                 ref={swiper}
                 slidesPerView={1}
-                className="w-screen h-screen relative">
+                className="w-screen h-screen relative z-50">
                 {[a, b, c, d].map((index, i) => {
                     return <SwiperSlide key={i}
                         className="relative w-full h-full"

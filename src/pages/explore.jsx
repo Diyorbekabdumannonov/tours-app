@@ -1,5 +1,6 @@
 import Filter from '@/components/Filter'
 import Navbar from '@/components/Navbar'
+import Pagenation from '@/components/Pagination'
 import Tour from '@/components/Tour'
 import Head from 'next/head'
 import { useContext, useEffect } from 'react'
@@ -7,12 +8,8 @@ import clientPromise from '../../lib/mongodb'
 import { Context } from './_app'
 
 export default function Explore({ tours }) {
-  const { SETTOURS, filteredTours } = useContext(Context)
+  const { SETTOURS } = useContext(Context)
   SETTOURS(tours)
-
-  useEffect(() => {
-    console.log(filteredTours)
-  }, [filteredTours])
 
   return (
     <>
@@ -30,31 +27,8 @@ export default function Explore({ tours }) {
           <div className='w-[50vw]'>
             <Filter />
           </div>
-          <div className="grid grid-cols-4 gap-4 mx-6 mt-10 w-[200vw]">
-            {filteredTours?.length ?
-              filteredTours.map(tour => {
-                return <Tour
-                  key={tour.title}
-                  title={tour.title}
-                  imgSrc={tour.image}
-                  href={tour.link}
-                  desc={tour.desc}
-                  price={tour.price}
-                />
-              })
-              : filteredTours?.length == 0
-                ?
-                <h1 className='text-center font-semibold text-2xl'>No Data Found :(</h1>
-                : tours.map(tour => {
-                  return <Tour
-                    key={tour.title}
-                    title={tour.title}
-                    imgSrc={tour.image}
-                    href={tour.link}
-                    desc={tour.desc}
-                    price={tour.price}
-                  />
-                })}
+          <div className='w-[200vw]'>
+            <Pagenation tours={tours} />
           </div>
         </div>
       </main>

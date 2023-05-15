@@ -11,6 +11,7 @@ export default function SearchBar() {
     const [duration, setDuration] = useState('')
     const [desc, setDesc] = useState('')
     const [price, setPrice] = useState('')
+    const [toPrice, setToPrice] = useState('')
 
     const router = useRouter();
     const formik = useRef()
@@ -32,10 +33,12 @@ export default function SearchBar() {
     }
 
     const handleKeyUp = () => {
-        let filteredTours = []
+        let filteredTours = [];
         filteredTours = TOURS?.filter(el => el.title.toLowerCase().includes(name.toLowerCase()))
-        filteredTours = filteredTours?.filter(el => el.price.toLowerCase().includes(price.toLowerCase()))
         filteredTours = filteredTours?.filter(el => el.duration.toLowerCase().includes(duration.toLowerCase()))
+        console.log(price.toString())
+        filteredTours = filteredTours?.filter(el => el.price.slice(4).replace(',', '') > parseInt(price))
+        filteredTours = filteredTours?.filter(el => el.price.slice(4).replace(',', '') < parseInt(toPrice))
         filteredTours = filteredTours?.filter(el => el.desc.toLowerCase().includes(desc.toLowerCase()))
         setFilteredTours(filteredTours)
     }
@@ -84,17 +87,30 @@ export default function SearchBar() {
                                 </div>
                             </div>
                             <hr className='w-px h-4 bg-sky-950' />
-                            <div className="relative">
-                                <span className="absolute top-1 left-2">💲 </span>
-                                <input
-                                    type="text"
-                                    name="price"
-                                    id="price"
-                                    className="block w-full bg-gray-50 outline-none py-1 pl-7 pr-12 text-sky-950 font-semibold placeholder:text-sky-950 sm:text-sm sm:leading-6"
-                                    placeholder="0.00"
-                                    aria-describedby="price-currency"
-                                    onChange={e => handleChange(setPrice, e)}
-                                    onKeyUp={handleKeyUp} />
+                            <div className="relative flex items-center">
+                                <span className="">💲 </span>
+                                <div className='flex items-center w-32'>
+                                    <label htmlFor="price" className='mb-0.5 mr-2'>from</label>
+                                    <input
+                                        type="text"
+                                        name="price"
+                                        id="price"
+                                        className="block w-full bg-gray-50 outline-none p-1 text-sky-950 font-semibold placeholder:text-sky-950 sm:text-sm sm:leading-6"
+                                        placeholder="0.00"
+                                        onChange={e => handleChange(setPrice, e)}
+                                        onKeyUp={handleKeyUp} />
+                                </div>
+                                <div className='flex items-center w-32'>
+                                    <label htmlFor="price2" className='mb-0.5 mr-2'>to</label>
+                                    <input
+                                        type="text"
+                                        name="price2"
+                                        id="price2"
+                                        className="block w-full bg-gray-50 outline-none p-1 text-sky-950 font-semibold placeholder:text-sky-950 sm:text-sm sm:leading-6"
+                                        placeholder="0.00"
+                                        onChange={e => handleChange(setToPrice, e)}
+                                        onKeyUp={handleKeyUp} />
+                                </div>
                                 <span className="text-gray-500 sm:text-sm absolute right-2 top-2">USD</span>
                             </div>
                             <button className='w-72 py-2 -my-1 bg-green-600 text-white font-bold text-xl rounded-r-full'>Find Tours</button>

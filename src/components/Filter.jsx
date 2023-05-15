@@ -7,6 +7,7 @@ export default function Filter() {
     const [duration, setDuration] = useState('')
     const [desc, setDesc] = useState('')
     const [price, setPrice] = useState('')
+    const [toPrice, setToPrice] = useState('')
 
     const formik = useRef()
     const { TOURS, setFilteredTours } = useContext(Context)
@@ -30,7 +31,8 @@ export default function Filter() {
     const handleKeyUp = () => {
         let filteredTours = []
         filteredTours = TOURS?.filter(el => el.title.toLowerCase().includes(name.toLowerCase()))
-        filteredTours = filteredTours?.filter(el => el.price.toLowerCase().includes(price.toLowerCase()))
+        filteredTours = filteredTours?.filter(el => el.price.slice(4).replace(',', '') > parseInt(price))
+        filteredTours = filteredTours?.filter(el => el.price.slice(4).replace(',', '') < parseInt(toPrice))
         filteredTours = filteredTours?.filter(el => el.duration.toLowerCase().includes(duration.toLowerCase()))
         filteredTours = filteredTours?.filter(el => el.desc.toLowerCase().includes(desc.toLowerCase()))
         setFilteredTours(filteredTours)
@@ -58,23 +60,32 @@ export default function Filter() {
                             onKeyUp={handleKeyUp}
                         />
                     </div>
-                    <div className='mt-4'>
-                        <label
-                            htmlFor="price"
-                            className='text-xl font-medium'>
-                            Price
-                        </label>
-                        <div className="shadow-sm relative mt-4">
-                            <span className="absolute top-1/12 left-0.5">💲 </span>
+                    <label
+                        className='text-xl font-medium mt-4'>
+                        Price
+                    </label>
+                    <div className="relative flex items-center input">
+                        <div className='flex items-center w-32'>
+                            <label htmlFor="price" className='mb-0.5 mr-2'>from</label>
                             <input
                                 type="text"
-                                className="input -mt-4 px-5"
-                                id='price'
-                                placeholder='00'
                                 name="price"
+                                id="price"
+                                className="border-none outline-none w-32"
+                                placeholder="0.00"
                                 onChange={e => handleChange(setPrice, e)}
                                 onKeyUp={handleKeyUp} />
-                            <span className="text-gray-500 sm:text-sm absolute right-2 top-1">USD</span>
+                        </div>
+                        <div className='flex items-center w-32'>
+                            <label htmlFor="price2" className='mb-0.5 mr-2'>to</label>
+                            <input
+                                type="text"
+                                name="price2"
+                                id="price2"
+                                className="border-none outline-none w-32 bg-transparent"
+                                placeholder="0.00"
+                                onChange={e => handleChange(setToPrice, e)}
+                                onKeyUp={handleKeyUp} />
                         </div>
                     </div>
                     <div className='mt-4'>
