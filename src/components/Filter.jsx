@@ -32,7 +32,7 @@ export default function Filter() {
         filteredTours = TOURS?.filter(el => el.title.toLowerCase().includes(name.toLowerCase()))
         filteredTours = filteredTours?.filter(el => el.price.toLowerCase().includes(price.toLowerCase()))
         filteredTours = filteredTours?.filter(el => el.duration.toLowerCase().includes(duration.toLowerCase()))
-        filteredTours = filteredTours?.filter(el => el.season.toLowerCase().includes(desc.toLowerCase()))
+        filteredTours = filteredTours?.filter(el => el.desc.toLowerCase().includes(desc.toLowerCase()))
         setFilteredTours(filteredTours)
     }
     return (
@@ -88,7 +88,7 @@ export default function Filter() {
                             className="input"
                             id='season'
                             name="season"
-                            placeholder='Spring, Summer, Winter'
+                            placeholder='Description'
                             onChange={e => handleChange(setDesc, e)}
                             onKeyUp={handleKeyUp} />
                     </div>

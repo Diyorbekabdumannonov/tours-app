@@ -18,7 +18,7 @@ export default function Header() {
     }, [])
 
     return (
-        <div className="relative -mt-[120px] overflow-hidden w-screen">
+        <div className="relative -mt-[105px] overflow-hidden w-screen">
             <Swiper
                 direction='horizontal'
                 loop

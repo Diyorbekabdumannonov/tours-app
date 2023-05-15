@@ -4,10 +4,12 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import 'swiper/css'
 import { MdOutlineSearch } from 'react-icons/md';
 import { Context } from '@/pages/_app';
+import logo from './../assets/logo.png'
+import Image from 'next/image';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { TOURS, setFilteredData } = useContext(Context)
+  const { TOURS, setFilteredTours } = useContext(Context)
 
   const navigation = [
     { name: 'Explore', href: '/explore' },
@@ -18,7 +20,7 @@ export default function Navbar() {
 
   const handleChange = (e) => {
     const filteredData = TOURS?.filter(el => el.title.toLowerCase().includes(e.target.value.toLowerCase()))
-    setFilteredData(filteredData)
+    setFilteredTours(filteredData)
   }
 
   return (
@@ -26,13 +28,12 @@ export default function Navbar() {
       <nav className='relative z-50 text-white'>
         <nav className="flex items-center justify-between p-6 lg:px-8 max-w-1440 mx-auto" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="/" className='flex items-center gap-4 mb-6 text-2xl font-bold'>
-              <img
+            <a href="/" className='flex items-center bg-white gap-4 rounded-xl p-1'>
+              <Image
                 className="h-12 w-auto"
-                src={'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/1024px-Tailwind_CSS_Logo.svg.png'}
+                src={logo}
                 alt="logo"
               />
-              <span>Logo</span>
             </a>
           </div>
           <div className="flex lg:hidden">
