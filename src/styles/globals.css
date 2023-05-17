@@ -10,7 +10,15 @@
     }
 }
 
-body {
-    overflow-x: hidden;
+.explore {
+    overflow: hidden;
     font-family: 'Roboto', sans-serif;
+}
+
+.tour:hover .readMore {
+    display: block;
+}
+
+*::-webkit-scrollbar {
+    display: none;
 }

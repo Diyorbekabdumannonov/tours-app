@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import 'swiper/css'
@@ -25,8 +25,8 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className='relative z-50 text-white'>
-        <nav className="flex items-center justify-between p-6 lg:px-8 max-w-1440 mx-auto" aria-label="Global">
+      <nav className='z-50 text-white relative'>
+        <nav className="flex items-center justify-between p-6 py-2 lg:px-8 max-w-1440 mx-auto" aria-label="Global">
           <div className="flex lg:flex-1">
             <a href="/" className='flex items-center bg-white gap-4 rounded-xl p-1'>
               <Image

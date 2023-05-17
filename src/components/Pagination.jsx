@@ -1,7 +1,6 @@
 import { Context } from '@/pages/_app'
 import React, { useContext, useState } from 'react'
 import Tour from './Tour'
-import Pagination from "react-js-pagination";
 
 export default function Pagenation({ tours }) {
     const { filteredTours } = useContext(Context)
@@ -14,7 +13,7 @@ export default function Pagenation({ tours }) {
         <div className='relative'>
             <div className="grid grid-cols-4 gap-6 px-6 mt-10 max-w-1440 mx-auto">
                 {filteredTours?.length ?
-                    filteredTours?.slice((activePage === 1 ? 0 : ((activePage - 1) * 10)), (activePage * 10)).map(tour => {
+                    filteredTours?.slice(0, activePage * 12).map(tour => {
                         return <Tour
                             key={tour.title}
                             title={tour.title}
@@ -27,7 +26,7 @@ export default function Pagenation({ tours }) {
                     : filteredTours === 'noData'
                         ?
                         <h1 className='text-center font-semibold text-2xl'>No Data Found :(</h1>
-                        : tours.slice((activePage === 1 ? 0 : ((activePage - 1) * 10)), (activePage * 10)).map(tour => {
+                        : tours.slice(0, activePage * 12).map(tour => {
                             return <Tour
                                 key={tour.title}
                                 title={tour.title}
@@ -38,16 +37,10 @@ export default function Pagenation({ tours }) {
                             />
                         })}
             </div>
-            <div className='sticky w-full bottom-0 z-20 mt-20 flex items-center justify-center py-2 text-white bg-sky-950'>
-                <Pagination
-                    innerClass='flex items-center gap-4'
-                    activePage={activePage}
-                    itemsCountPerPage={12}
-                    totalItemsCount={tours?.length}
-                    pageRangeDisplayed={5}
-                    itemClass="bg-white text-sky-950 w-8 h-8 flex items-center justify-center rounded-md text-xl font-bold"
-                    onChange={e => handlePageChange(e)}
-                />
+            <div className='z-20 my-20 flex items-center justify-center pb-4 text-white'>
+                <button className='px-8 bg-[#111827] rounded-md py-2.5' onClick={() => handlePageChange(activePage + 1)}>
+                    Load More
+                </button>
             </div>
         </div>
     )

@@ -5,7 +5,6 @@ import SearchBar from './SearchBar';
 import a from './../assets/1.jpg'
 import b from './../assets/2.jpg'
 import c from './../assets/3.jpg'
-import d from './../assets/4.jpg'
 import Image from 'next/image';
 
 export default function Header() {
@@ -18,14 +17,14 @@ export default function Header() {
     }, [])
 
     return (
-        <div className="relative -mt-[105px] overflow-hidden w-screen">
+        <div className="relative -mt-[72px] overflow-hidden w-screen">
             <Swiper
                 direction='horizontal'
                 loop
                 ref={swiper}
                 slidesPerView={1}
                 className="w-screen h-screen relative z-50">
-                {[a, b, c, d].map((index, i) => {
+                {[a, b, c].map((index, i) => {
                     return <SwiperSlide key={i}
                         className="relative w-full h-full"
                         data-swiper-autoplay="90">
