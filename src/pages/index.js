@@ -19,7 +19,7 @@ export default function Home({ tours }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/png" href="/logo.png" />
       </Head>
-      <main>
+      <main className='pb-4'>
         <Navbar />
         <Header />
         <Pagenation tours={tours} />

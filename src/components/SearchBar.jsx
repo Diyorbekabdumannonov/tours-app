@@ -3,11 +3,11 @@ import { MdMyLocation } from 'react-icons/md'
 import { BsFillCalendarDayFill } from 'react-icons/bs'
 import { Field, Formik, Form, useFormik } from 'formik'
 import { Context } from '@/pages/_app';
+import { useRouter } from 'next/router';
 
 export default function SearchBar() {
-    const { setFilteredTours, TOURS } = useContext(Context)
     const formik = useRef()
-
+    const router = useRouter()
     const initialValues = {
         searchTxt: '',
         duration: '',
@@ -16,25 +16,9 @@ export default function SearchBar() {
         priceTo: '',
         desc: ''
     }
-    const onSubmit = (values, submitProps) => {
-        console.log(values)
-        let filteredTours = [];
-        filteredTours = TOURS?.filter(el => el.title.toLowerCase().includes(values.searchTxt.toLowerCase()))
-        if (values.duration) {
-            filteredTours = filteredTours?.filter(el => el.duration.includes(values.duration))
-        }
-        if (values.price) {
-            filteredTours = filteredTours?.filter(el => el.price.slice(4).replace(',', '') > parseInt(values.price))
-        }
-        if (values.priceTo) {
 
-            filteredTours = filteredTours?.filter(el => el.price.slice(4).replace(',', '') < parseInt(values.priceTo))
-        }
-        if (values.season) {
-            filteredTours = filteredTours?.filter(el => el.desc.toLowerCase().includes(values.season.toLowerCase()))
-        }
-        console.log(filteredTours)
-        setFilteredTours(filteredTours)
+    const onSubmit = (values, submitProps) => {
+        router.push('/explore')
         submitProps.setSubmitting(false)
         submitProps.resetForm()
     }

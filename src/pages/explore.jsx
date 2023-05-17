@@ -19,7 +19,7 @@ export default function Explore({ tours }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/logo.png" />
       </Head>
-      <main className='explore'>
+      <main className='explore pb-4'>
         <div className='bg-sky-950 sticky top-0 z-50'>
           <Navbar />
         </div>
@@ -27,7 +27,7 @@ export default function Explore({ tours }) {
           <div className='w-[50vw]'>
             <Filter />
           </div>
-          <div className='w-[200vw] h-screen overflow-auto'>
+          <div className='w-[200vw] h-screen overflow-auto pb-32'>
             <Pagenation tours={tours} />
           </div>
         </div>

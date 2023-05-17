@@ -12,6 +12,7 @@
 
 .explore {
     overflow: hidden;
+    max-height: 100vh;
     font-family: 'Roboto', sans-serif;
 }
 

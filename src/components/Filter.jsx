@@ -29,12 +29,12 @@ export default function Filter() {
     }
 
     const handleKeyUp = () => {
-        let filteredTours = []
-        filteredTours = TOURS?.filter(el => el.title.toLowerCase().includes(name.toLowerCase()))
-        filteredTours = filteredTours?.filter(el => el.price.slice(4).replace(',', '') > parseInt(price))
-        filteredTours = filteredTours?.filter(el => el.price.slice(4).replace(',', '') < parseInt(toPrice))
-        filteredTours = filteredTours?.filter(el => el.duration.toLowerCase().includes(duration.toLowerCase()))
-        filteredTours = filteredTours?.filter(el => el.desc.toLowerCase().includes(desc.toLowerCase()))
+        let filteredTours = TOURS?.filter(el => el.title.toLocaleLowerCase().includes(name.toLowerCase()))
+            .filter(el => el.price.slice(4).replace(',', '') > parseInt(price))
+            .filter(el => el.price.slice(4).replace(',', '') < parseInt(toPrice))
+            .filter(el => el.duration.toLowerCase().includes(duration.toLowerCase()))
+            .filter(el => el.desc.toLowerCase().includes(desc.toLowerCase()))
+        console.log(filteredTours, name.toLocaleLowerCase())
         setFilteredTours(filteredTours)
     }
     return (
@@ -92,7 +92,7 @@ export default function Filter() {
                         <label
                             htmlFor="season"
                             className='text-xl font-medium'>
-                            Season
+                            Description
                         </label>
                         <input
                             type="text"

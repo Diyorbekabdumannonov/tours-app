@@ -13,9 +13,9 @@ export default function Navbar() {
 
   const navigation = [
     { name: 'Explore', href: '/explore' },
-    { name: 'Product', href: '/' },
     { name: 'Features', href: '/' },
     { name: 'Marketplace', href: '/' },
+    { name: 'Blog', href: '/' },
   ]
 
   const handleChange = (e) => {

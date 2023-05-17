@@ -11,22 +11,10 @@ export default function Pagenation({ tours }) {
 
     return (
         <div className='relative'>
-            <div className="grid grid-cols-4 gap-6 px-6 mt-10 max-w-1440 mx-auto">
-                {filteredTours?.length ?
-                    filteredTours?.slice(0, activePage * 12).map(tour => {
-                        return <Tour
-                            key={tour.title}
-                            title={tour.title}
-                            imgSrc={tour.image}
-                            href={tour.link}
-                            desc={tour.desc}
-                            price={tour.price}
-                        />
-                    })
-                    : filteredTours === 'noData'
-                        ?
-                        <h1 className='text-center font-semibold text-2xl'>No Data Found :(</h1>
-                        : tours.slice(0, activePage * 12).map(tour => {
+            {filteredTours?.length ?
+                <>
+                    <div className="grid grid-cols-4 gap-6 px-6 mt-10 max-w-1440 mx-auto">
+                        {filteredTours?.slice(0, activePage * 12).map(tour => {
                             return <Tour
                                 key={tour.title}
                                 title={tour.title}
@@ -36,12 +24,40 @@ export default function Pagenation({ tours }) {
                                 price={tour.price}
                             />
                         })}
-            </div>
-            <div className='z-20 my-20 flex items-center justify-center pb-4 text-white'>
-                <button className='px-8 bg-[#111827] rounded-md py-2.5' onClick={() => handlePageChange(activePage + 1)}>
-                    Load More
-                </button>
-            </div>
-        </div>
+                    </div>
+                    {
+                        (activePage !== Math.round((filteredTours.length / 12 + 1))) ? <div className='z-20 my-20 flex items-center justify-center pb-4 text-white'>
+                            <button className='px-8 bg-[#111827] rounded-md py-2.5' onClick={() => handlePageChange(activePage + 1)}>
+                                Load More
+                            </button>
+                        </div> : ''
+                    }
+                </>
+                : filteredTours === 'noData'
+                    ?
+                    <h1 className='text-center font-semibold text-2xl'>No Data Found :(</h1>
+                    : <>
+                        <div className="grid grid-cols-4 gap-6 px-6 mt-10 max-w-1440 mx-auto">
+                            {tours.slice(0, activePage * 12).map(tour => {
+                                return <Tour
+                                    key={tour.title}
+                                    title={tour.title}
+                                    imgSrc={tour.image}
+                                    href={tour.link}
+                                    desc={tour.desc}
+                                    price={tour.price}
+                                />
+                            })}
+                        </div>
+                        {
+                            (activePage !== Math.round((tours.length / 12))) ? <div className='z-20 my-20 flex items-center justify-center pb-4 text-white'>
+                                <button className='px-8 bg-[#111827] rounded-md py-2.5' onClick={() => handlePageChange(activePage + 1)}>
+                                    Load More
+                                </button>
+                            </div> : ''
+                        }
+                    </>
+            }
+        </div >
     )
 }
