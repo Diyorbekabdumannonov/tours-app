@@ -52,7 +52,7 @@ export async function getServerSideProps() {
   } catch (e) {
     console.error(e);
     return {
-      props: { tours: [] },
+      props: { tours: ['nodata'] },
     };
   }
 }

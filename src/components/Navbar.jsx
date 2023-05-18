@@ -10,6 +10,7 @@ import Image from 'next/image';
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { TOURS, setFilteredTours } = useContext(Context)
+  const [navbar, setNavbar] = useState(false)
 
   const navigation = [
     { name: 'Explore', href: '/explore' },
@@ -23,9 +24,23 @@ export default function Navbar() {
     setFilteredTours(filteredData)
   }
 
+  const changeBackground = () => {
+    if (window.scrollY > 72) {
+      setNavbar(true)
+    }
+    else {
+      setNavbar(false)
+    }
+  }
+
+  useEffect(() => {
+    changeBackground()
+    window.addEventListener("scroll", changeBackground)
+  })
+
   return (
     <>
-      <nav className='z-50 text-white relative'>
+      <nav className={'z-50 sticky top-0 ' + (navbar ? 'bg-white text-black shadow-md' : 'text-white bg-transparent')}>
         <nav className="flex items-center justify-between p-6 py-2 lg:px-8 max-w-1440 mx-auto" aria-label="Global">
           <div className="flex lg:flex-1">
             <a href="/" className='flex items-center bg-white gap-4 rounded-xl p-1'>

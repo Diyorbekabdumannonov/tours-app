@@ -64,7 +64,7 @@ export default function SearchBar() {
                             </div>
                             <hr className='w-px h-4 bg-sky-950' />
                             <div className="relative flex items-center">
-                                <span className="">💲 </span>
+                                <span>💲 </span>
                                 <div className='flex items-center w-32'>
                                     <label htmlFor="price" className='mb-0.5 mr-2'>from</label>
                                     <Field

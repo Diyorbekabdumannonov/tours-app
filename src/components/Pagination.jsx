@@ -1,14 +1,23 @@
 import { Context } from '@/pages/_app'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Tour from './Tour'
 
 export default function Pagenation({ tours }) {
     const { filteredTours } = useContext(Context)
     const [activePage, setActivePage] = useState(1)
+    const [maxPage, setMaxPage] = useState(5)
     const handlePageChange = (pageNumber) => {
         setActivePage(pageNumber);
     }
-
+    useEffect(() => {
+        if ((filteredTours?.length / 12).toString().slice(2) != 0) {
+            setMaxPage(Math.floor((filteredTours?.length / 12)) + 1)
+        }
+        if (filteredTours?.length) {
+            setActivePage(1)
+        }
+        console.log(maxPage, activePage)
+    }, [filteredTours])
     return (
         <div className='relative'>
             {filteredTours?.length ?
@@ -26,11 +35,12 @@ export default function Pagenation({ tours }) {
                         })}
                     </div>
                     {
-                        (activePage !== Math.round((filteredTours.length / 12 + 1))) ? <div className='z-20 my-20 flex items-center justify-center pb-4 text-white'>
-                            <button className='px-8 bg-[#111827] rounded-md py-2.5' onClick={() => handlePageChange(activePage + 1)}>
-                                Load More
-                            </button>
-                        </div> : ''
+                        (activePage !== maxPage) ?
+                            <div className='z-20 my-20 flex items-center justify-center pb-4 text-white'>
+                                <button className='px-8 bg-[#111827] rounded-md py-2.5' onClick={() => handlePageChange(activePage + 1)}>
+                                    Load More
+                                </button>
+                            </div> : ''
                     }
                 </>
                 : filteredTours === 'noData'
