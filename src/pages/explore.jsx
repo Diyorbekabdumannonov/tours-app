@@ -3,12 +3,13 @@ import Navbar from '@/components/Navbar'
 import Pagenation from '@/components/Pagination'
 import Tour from '@/components/Tour'
 import Head from 'next/head'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import clientPromise from '../../lib/mongodb'
 import { Context } from './_app'
 
 export default function Explore({ tours }) {
   const { SETTOURS } = useContext(Context)
+  const [loading, setLoading] = useState(false)
   SETTOURS(tours)
 
   return (
@@ -25,11 +26,20 @@ export default function Explore({ tours }) {
         </div>
         <div className='flex max-w-1440 mx-auto mt-4'>
           <div className='w-[50vw]'>
-            <Filter />
+            <Filter params={{ loading, setLoading }} />
           </div>
-          <div className='w-[200vw] h-screen overflow-auto pb-32'>
-            <Pagenation tours={tours} />
-          </div>
+          {loading ?
+            <div className='w-[200vw] flex items-center justify-center'>
+              <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            : <div className='w-[200vw] h-screen overflow-auto pb-32'>
+              <Pagenation tours={tours} />
+            </div>}
         </div>
       </main>
     </>

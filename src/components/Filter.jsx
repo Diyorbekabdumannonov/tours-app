@@ -4,8 +4,9 @@ import React, { useContext } from 'react'
 import { BsClock } from 'react-icons/bs'
 import { MdMyLocation } from 'react-icons/md'
 
-export default function Filter() {
-    const { TOURS, setFilteredTours } = useContext(Context)
+export default function Filter({ params }) {
+    const { filteredTours, TOURS, setFilteredTours, activePage } = useContext(Context)
+    const { loading, setLoading } = params
 
     const initialValues = {
         searchTxt: '',
@@ -15,29 +16,30 @@ export default function Filter() {
         price2: ''
     }
     const onSubmit = (values, submitProps) => {
-        let filteredTours = TOURS
+        setLoading(true)
+        let tours = TOURS
         if (values.searchTxt) {
-            filteredTours = filteredTours.filter(el => el.title.toLowerCase().includes(values.searchTxt.toLowerCase()))
+            tours = tours.filter(el => el.title.toLowerCase().includes(values.searchTxt.toLowerCase()))
         }
         if (values.price) {
-            filteredTours = filteredTours.filter(el => el.price.slice(4).replace(',', '') > parseInt(values.price))
+            tours = tours.filter(el => el.price.slice(4).replace(',', '') > parseInt(values.price))
         }
         if (values.priceTo) {
-            filteredTours = filteredTours.filter(el => el.price.slice(4).replace(',', '') < parseInt(values.price2))
+            tours = tours.filter(el => el.price.slice(4).replace(',', '') < parseInt(values.price2))
         }
         if (values.duration) {
-            filteredTours = filteredTours.filter(el => el.duration.includes(values.duration))
+            tours = tours.filter(el => el.duration.includes(values.duration))
         }
         if (values.desc) {
-            filteredTours = filteredTours.filter(el => el.desc.toLowerCase().includes(values.desc.toLowerCase()))
+            tours = tours.filter(el => el.desc.toLowerCase().includes(values.desc.toLowerCase()))
         }
         setTimeout(() => {
-            setFilteredTours(filteredTours)
-            console.log(filteredTours)
+            setFilteredTours(tours)
+            setLoading(false)
         }, 1000)
         submitProps.setSubmitting(false)
-        submitProps.resetForm()
     }
+    console.log(filteredTours)
     return (
         <div className='sticky top-0 left-0 h-fit w-full flex items-center justify-center'>
             <Formik
@@ -45,6 +47,7 @@ export default function Filter() {
                 initialValues={initialValues}>
                 <Form>
                     <div className="flex flex-col w-72 z-50 p-4">
+                        <h1 className='font-normal text-gray-900 mb-4 text-sm'>Showing {filteredTours ? filteredTours?.length : TOURS?.length} tours</h1>
                         <div>
                             <label
                                 htmlFor="searchTxt"
@@ -52,12 +55,12 @@ export default function Filter() {
                                 Search Tours
                             </label>
                             <div className='relative flex items-center'>
+                                <MdMyLocation className="h-5 w-5 text-sky-950 absolute left-2 bg-[#f7f7f7] top-6" />
                                 <Field
                                     id='searchTxt'
                                     name="searchTxt"
                                     placeholder="Search “Thailand, Asia”"
-                                    className="input" />
-                                <MdMyLocation className="h-5 w-5 text-sky-950 absolute right-2 bg-[#f7f7f7] top-6" />
+                                    className="input pl-8" />
                             </div>
                         </div>
                         <label
@@ -102,15 +105,15 @@ export default function Filter() {
                                 Duration
                             </label>
                             <div className='relative flex items-center'>
+                                <BsClock className="text-sky-950 absolute left-2 bg-[#f7f7f7] top-7" />
                                 <Field
                                     placeholder="8 Days"
-                                    className="input"
+                                    className="input pl-8"
                                     id='duration'
                                     name="duration" />
-                                <BsClock className="text-sky-950 absolute right-2 bg-[#f7f7f7] top-7" />
                             </div>
                         </div>
-                        <button className='w-40 mt-6 mx-auto bg-[#008489] text-white font-medium py-2 rounded' type='submit'>Filter</button>
+                        <button className='w-full mt-6 mx-auto bg-[#008489] text-white font-medium py-2 rounded' type='submit'>Filter</button>
                     </div>
                 </Form>
             </Formik>

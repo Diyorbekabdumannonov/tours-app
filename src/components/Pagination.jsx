@@ -3,8 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Tour from './Tour'
 
 export default function Pagenation({ tours }) {
-    const { filteredTours } = useContext(Context)
-    const [activePage, setActivePage] = useState(1)
+    const { filteredTours, activePage, setActivePage } = useContext(Context)
     const [maxPage, setMaxPage] = useState(5)
     const handlePageChange = (pageNumber) => {
         setActivePage(pageNumber);
@@ -43,7 +42,7 @@ export default function Pagenation({ tours }) {
                             </div> : ''
                     }
                 </>
-                : filteredTours === 'noData'
+                : filteredTours?.length === 0
                     ?
                     <h1 className='text-center font-semibold text-2xl'>No Data Found :(</h1>
                     : <>
